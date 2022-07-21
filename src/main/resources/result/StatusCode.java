@@ -1,5 +1,3 @@
-package com.example.virtual.campus.common;
-
 /**
  * 返回码
  */

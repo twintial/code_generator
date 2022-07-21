@@ -35,10 +35,10 @@ public class ${upperTableName}Controller {
     })
     </#if>
     @PostMapping(value = "/search/{page}/{size}" )
-    public Result<PageInfo> findPage(@RequestBody(required = false) <#if swagger==true>@ApiParam(name = "${upperTableName}对象",value = "传入JSON数据",required = false)</#if> ${upperTableName} ${camelTableName}, @PathVariable  int page, @PathVariable  int size) {
+    public CommonResult<CommonPage<${upperTableName}>> findPage(@RequestBody(required = false) <#if swagger==true>@ApiParam(name = "${upperTableName}对象",value = "传入JSON数据",required = false)</#if> ${upperTableName} ${camelTableName}, @PathVariable  int page, @PathVariable  int size) {
         //调用${upperTableName}Service实现分页条件查询${upperTableName}
         PageInfo<${upperTableName}> pageInfo = ${camelTableName}Service.findPage(${camelTableName}, page, size);
-        return new Result(true,StatusCode.OK,"查询成功",pageInfo);
+        return CommonResult.success(CommonPage.restPage(pageInfo));
     }
 
     /***
@@ -55,10 +55,10 @@ public class ${upperTableName}Controller {
     })
     </#if>
     @GetMapping(value = "/search/{page}/{size}" )
-    public Result<PageInfo> findPage(@PathVariable  int page, @PathVariable  int size) {
+    public CommonResult<CommonPage<${upperTableName}>> findPage(@PathVariable  int page, @PathVariable  int size) {
         //调用${upperTableName}Service实现分页查询${upperTableName}
         PageInfo<${upperTableName}> pageInfo = ${camelTableName}Service.findPage(page, size);
-        return new Result<PageInfo>(true,StatusCode.OK,"查询成功",pageInfo);
+        return CommonResult.success(CommonPage.restPage(pageInfo));
     }
 
     /***
@@ -70,10 +70,10 @@ public class ${upperTableName}Controller {
     @ApiOperation(value = "${upperTableName}条件查询",notes = "条件查询${upperTableName}方法详情",tags = {"${upperTableName}Controller"})
     </#if>
     @PostMapping(value = "/search" )
-    public Result<List<${upperTableName}>> findList(@RequestBody(required = false) <#if swagger==true>@ApiParam(name = "${upperTableName}对象",value = "传入JSON数据",required = false)</#if> ${upperTableName} ${camelTableName}) {
+    public CommonResult<List<${upperTableName}>> findList(@RequestBody(required = false) <#if swagger==true>@ApiParam(name = "${upperTableName}对象",value = "传入JSON数据",required = false)</#if> ${upperTableName} ${camelTableName}) {
         //调用${upperTableName}Service实现条件查询${upperTableName}
         List<${upperTableName}> list = ${camelTableName}Service.findList(${camelTableName});
-        return new Result<List<${upperTableName}>>(true,StatusCode.OK,"查询成功",list);
+        return CommonResult.success(list);
     }
 
     /***
@@ -86,10 +86,12 @@ public class ${upperTableName}Controller {
     @ApiImplicitParam(paramType = "path", name = "id", value = "主键ID", required = true, dataType = "${keyType}")
     </#if>
     @DeleteMapping(value = "/{id}" )
-    public Result delete(@PathVariable ${keyType} id) {
+    public CommonResult<Object> delete(@PathVariable ${keyType} id) {
         //调用${upperTableName}Service实现根据主键删除
-        ${camelTableName}Service.delete(id);
-        return new Result(true,StatusCode.OK,"删除成功");
+        if (${camelTableName}Service.delete(id).equals(0)) {
+            return CommonResult.failed();
+        }
+        return CommonResult.success(null);
     }
 
     /***
@@ -103,12 +105,14 @@ public class ${upperTableName}Controller {
     @ApiImplicitParam(paramType = "path", name = "id", value = "主键ID", required = true, dataType = "${keyType}")
     </#if>
     @PutMapping(value="/{id}")
-    public Result update(@RequestBody <#if swagger==true>@ApiParam(name = "${upperTableName}对象",value = "传入JSON数据",required = false)</#if> ${upperTableName} ${camelTableName},@PathVariable ${keyType} id) {
+    public CommonResult<Object> update(@RequestBody <#if swagger==true>@ApiParam(name = "${upperTableName}对象",value = "传入JSON数据",required = false)</#if> ${upperTableName} ${camelTableName},@PathVariable ${keyType} id) {
         //设置主键值
         ${camelTableName}.${keySetMethod}(id);
         //调用${upperTableName}Service实现修改${upperTableName}
-        ${camelTableName}Service.update(${camelTableName});
-        return new Result(true,StatusCode.OK,"修改成功");
+        if (${camelTableName}Service.update(${camelTableName}).equals(0)) {
+            return CommonResult.failed();
+        }
+        return CommonResult.success(null);
     }
 
     /***
@@ -120,10 +124,12 @@ public class ${upperTableName}Controller {
     @ApiOperation(value = "${upperTableName}添加",notes = "添加${upperTableName}方法详情",tags = {"${upperTableName}Controller"})
     </#if>
     @PostMapping
-    public Result add(@RequestBody  <#if swagger==true>@ApiParam(name = "${upperTableName}对象",value = "传入JSON数据",required = true)</#if> ${upperTableName} ${camelTableName}) {
+    public CommonResult<Object> insert(@RequestBody  <#if swagger==true>@ApiParam(name = "${upperTableName}对象",value = "传入JSON数据",required = true)</#if> ${upperTableName} ${camelTableName}) {
         //调用${upperTableName}Service实现添加${upperTableName}
-        ${camelTableName}Service.add(${camelTableName});
-        return new Result(true,StatusCode.OK,"添加成功");
+        if(${camelTableName}Service.insert(${camelTableName}).equals(0)){
+            return CommonResult.failed();
+        }
+        return CommonResult.success(null);
     }
 
     /***
@@ -136,10 +142,10 @@ public class ${upperTableName}Controller {
     @ApiImplicitParam(paramType = "path", name = "id", value = "主键ID", required = true, dataType = "${keyType}")
     </#if>
     @GetMapping("/{id}")
-    public Result<${upperTableName}> findById(@PathVariable ${keyType} id) {
+    public CommonResult<${upperTableName}> findById(@PathVariable ${keyType} id) {
         //调用${upperTableName}Service实现根据主键查询${upperTableName}
         ${upperTableName} ${camelTableName} = ${camelTableName}Service.findById(id);
-        return new Result<${upperTableName}>(true,StatusCode.OK,"查询成功",${camelTableName});
+        return CommonResult.success(${camelTableName});
     }
 
     /***
@@ -150,9 +156,9 @@ public class ${upperTableName}Controller {
     @ApiOperation(value = "查询所有${upperTableName}",notes = "查询所${upperTableName}有方法详情",tags = {"${upperTableName}Controller"})
     </#if>
     @GetMapping
-    public Result<List<${upperTableName}>> findAll() {
+    public CommonResult<List<${upperTableName}>> findAll() {
         //调用${upperTableName}Service实现查询所有${upperTableName}
         List<${upperTableName}> list = ${camelTableName}Service.findAll();
-        return new Result<List<${upperTableName}>>(true, StatusCode.OK,"查询成功",list) ;
+        return CommonResult.success(list);
     }
 }

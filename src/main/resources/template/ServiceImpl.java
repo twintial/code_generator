@@ -83,8 +83,8 @@ public class ${upperTableName}ServiceImpl implements ${upperTableName}Service {
      * @param id
      */
     @Override
-    public void delete(${keyType} id) {
-        ${camelTableName}Mapper.deleteByPrimaryKey(id);
+    public Integer delete(${keyType} id) {
+        return ${camelTableName}Mapper.deleteByPrimaryKey(id);
     }
 
     /**
@@ -92,8 +92,8 @@ public class ${upperTableName}ServiceImpl implements ${upperTableName}Service {
      * @param ${camelTableName}
      */
     @Override
-    public void update(${upperTableName} ${camelTableName}) {
-        ${camelTableName}Mapper.updateByPrimaryKey(${camelTableName});
+    public Integer update(${upperTableName} ${camelTableName}) {
+        return ${camelTableName}Mapper.updateByPrimaryKey(${camelTableName});
     }
 
     /**
@@ -101,8 +101,8 @@ public class ${upperTableName}ServiceImpl implements ${upperTableName}Service {
      * @param ${camelTableName}
      */
     @Override
-    public void add(${upperTableName} ${camelTableName}) {
-        ${camelTableName}Mapper.insert(${camelTableName});
+    public Integer insert(${upperTableName} ${camelTableName}) {
+        return ${camelTableName}Mapper.insert(${camelTableName});
     }
 
     /**

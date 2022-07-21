@@ -37,26 +37,26 @@ public interface ${upperTableName}Service {
      * 删除${upperTableName}
      * @param id
      */
-    void delete(${keyType} id);
+    Integer delete(${keyType} id);
 
     /***
      * 修改${upperTableName}数据
      * @param ${camelTableName}
      */
-    void update(${upperTableName} ${camelTableName});
+    Integer update(${upperTableName} ${camelTableName});
 
     /***
      * 新增${upperTableName}
      * @param ${camelTableName}
      */
-    void add(${upperTableName} ${camelTableName});
+    Integer insert(${upperTableName} ${camelTableName});
 
     /**
      * 根据ID查询${upperTableName}
      * @param id
      * @return
      */
-     ${upperTableName} findById(${keyType} id);
+    ${upperTableName} findById(${keyType} id);
 
     /***
      * 查询所有${upperTableName}
