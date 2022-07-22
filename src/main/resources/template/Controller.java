@@ -11,7 +11,7 @@ import java.util.List;
  * @Description:${upperTableName}Controller构建
  * @Date:${date}
  */
-<#if swagger==true>@Api(value = "${upperTableName}Controller")</#if>
+<#if swagger==true>@Api(tags = "${upperTableName}Controller")</#if>
 @RestController
 @RequestMapping("/${camelTableName}")
 @CrossOrigin

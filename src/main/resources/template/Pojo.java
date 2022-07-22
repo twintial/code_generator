@@ -31,7 +31,7 @@ public class ${upperTableName} implements Serializable{
 	</#if>
 	</#if>
     @Column(name = "${field.originColumnName}")
-	private ${field.simpleType} ${field.camelColumnName};//${field.desc!""}
+	private ${field.simpleType} ${field.camelColumnName};
 
 </#list>
 
