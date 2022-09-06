@@ -9,9 +9,9 @@ import java.io.Serializable;
 import ${set};
 </#list>
 /**
- * @Author:${authorName}
- * @Description:${upperTableName}构建
- * @Date:${date}
+ * @Author: ${authorName}
+ * @Description: ${upperTableName}构建
+ * @Date: ${date}
  */
 
 <#if swagger==true>

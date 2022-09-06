@@ -8,9 +8,9 @@ import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 import java.util.List;
 /****
- * @Author:${authorName}
- * @Description:${upperTableName}业务层接口实现类
- * @Date:${date}
+ * @Author: ${authorName}
+ * @Description: ${upperTableName}业务层接口实现类
+ * @Date: ${date}
  *****/
 @Service
 public class ${upperTableName}ServiceImpl implements ${upperTableName}Service {

@@ -3,9 +3,9 @@ package ${packageName};
 import com.github.pagehelper.PageInfo;
 import java.util.List;
 /****
- * @Author:${authorName}
- * @Description:${upperTableName}业务层接口
- * @Date:${date}
+ * @Author: ${authorName}
+ * @Description: ${upperTableName}业务层接口
+ * @Date: ${date}
  *****/
 public interface ${upperTableName}Service {
 
